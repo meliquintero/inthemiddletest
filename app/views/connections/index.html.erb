@@ -1,0 +1,20 @@
+<h1>Welcome to Connections</h1>
+<p>Please enter the origin of your info<%=", " + current_user.name if current_user%></p>
+<br><br>
+<%= form_tag search_result_path, class: "input-group input-group-lg" do  %>
+<%= text_field_tag :user_origin_one, nil, class: 'form-control', placeholder: 'Origin one' %>
+<%= text_field_tag :user_origin_two, nil, class: 'form-control', placeholder: 'Origin Two' %>
+<%= text_field_tag :departure_date, nil, class: 'form-control', placeholder: 'Departure Date' %>
+<%= text_field_tag :return_date, nil, class: 'form-control', placeholder: 'Return Date' %>
+
+<span class="input-group-btn">
+  <%= submit_tag "Search", class: 'btn btn-default'%>
+</span>
+
+
+<% end %>
+
+
+<% if @auth%>
+<%=@auth %>
+<% end %>

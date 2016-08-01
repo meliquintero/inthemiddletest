@@ -1,0 +1,52 @@
+<% if @sabre_one || @sabre_two %>
+<h2> Your options from <%= @sabre_one.originlocation %> and <%= @sabre_two.originlocation %>are: </h2>
+<div class="row">
+
+<div class="col-md-6">
+
+<%@sabre_one.fareinfo.each do |destination| %>
+<%= destination["DestinationLocation"] %>
+<br>
+Airline : <%= destination['LowestFare']["AirlineCodes"] %>
+<br>
+Price: <%= destination['LowestFare']["Fare"] %> <%= destination['CurrencyCode'] %>
+<br>
+Time:<%= destination["DepartureDateTime"] %>
+
+
+<br><br>
+<% end %>
+</div>
+
+<div class="col-md-6">
+
+<%@sabre_two.fareinfo.each do |destination| %>
+<%= destination["DestinationLocation"] %>
+<br>
+Airline : <%= destination['LowestFare']["AirlineCodes"].first %>
+<br>
+Price: <%= destination['LowestFare']["Fare"] %> <%= destination['CurrencyCode'] %>
+<br>
+Time:<%= destination["DepartureDateTime"] %>
+
+
+<br><br>
+<% end %>
+</div>
+</div>
+
+<% end %>
+<br><br><br>
+
+<br><br><br><br><br><br>
+
+<% if @kayak %>
+<%= @kayak.inspect %>
+<% end %>
+<br><br><br>
+<br><br><br><br><br><br>
+
+<% if @data %>
+<%= @data.inspect %>
+<% end %>
+<br><br><br>
