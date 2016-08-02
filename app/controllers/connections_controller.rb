@@ -41,9 +41,6 @@ class ConnectionsController < ApplicationController
     departure_date = params[:departure_date]
     return_date = params[:return_date]
 
-    @sabre_one = Sabre.find(origin_one, departure_date, return_date)
-    @sabre_two = Sabre.find(origin_two, departure_date, return_date)
-
     # @kayak = Kayak.find(origin_one, departure_date)
     # @data = QpxExpress.find(origin_one, origin_two, departure_date, return_date)
 

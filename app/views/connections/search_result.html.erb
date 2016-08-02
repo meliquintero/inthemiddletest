@@ -1,44 +1,30 @@
-<h2> Your options from <%= @sabre_one.originlocation %> and <%= @sabre_two.originlocation %>are: </h2>
-<div class="row">
-
-<h2>
-  <div class="col-md-6">
-
-<%= @sabre_one.fareinfo.length %>
-</div>
-<div class="col-md-6">
-
-<%= @sabre_two.fareinfo.length %>
-</div>
-
-</h2>
-</div>
+<h2> Your options from <%= @destinations[0].originlocation %> and <%= @destinations[1].originlocation %> are: </h2>
 
 <div class="row">
 
   <%@destinations.each do |dest| %>
   <div class="col-md-6">
 
-From <strong> <%= dest.originlocation %> </strong>
-<h2>
-<%= dest.fareinfo.length%>
-</h2>
-<% dest.fareinfo.each do |one|%>
-<br>
-To <strong> <%= one["DestinationLocation"] %> </strong>
-<br>
-Airline : <%= one['LowestFare']["AirlineCodes"] %>
-<br>
-Price: <%= one['LowestFare']["Fare"] %> <%= one['CurrencyCode'] %>
-<br>
-Getting in on: <%= one["DepartureDateTime"] %>
-<br>
-Coming back on: <%= one["ReturnDateTime"] %>
-<br><br><br>
-<% end %>
+  From <strong> <%= dest.originlocation %> </strong>
+  <h2>
+  <%= dest.fareinfo.length%>
+  </h2>
+  <% dest.fareinfo.each do |one|%>
+  <br>
+  To <strong> <%= one["DestinationLocation"] %> </strong>
+  <br>
+  Airline : <%= one['LowestFare']["AirlineCodes"] %>
+  <br>
+  Price: <%= one['LowestFare']["Fare"] %> <%= one['CurrencyCode'] %>
+  <br>
+  Getting in on: <%= one["DepartureDateTime"] %>
+  <br>
+  Coming back on: <%= one["ReturnDateTime"] %>
+  <br><br><br>
+  <% end %>
 
-</div>
-<% end %>
+  </div>
+  <% end %>
 
 
 </div>
