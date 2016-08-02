@@ -7,7 +7,9 @@ class ConnectionsController < ApplicationController
   # before_action :require_login, only: [:create, :show, :destroy]
 
   def index
+    @top_destinations = Sabre.top_destinations
   end
+
   def new
   end
 

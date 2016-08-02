@@ -1,8 +1,4 @@
-require 'httparty'
-require 'json'
-
 class Sabre
-  BASE_URL = "https://api.sabre.com/v2"
 
   attr_accessor :originlocation, :fareinfo
   def initialize(data)
@@ -11,9 +7,14 @@ class Sabre
   end
 
   def self.find(origin, departure_date, return_date)
-    data = SacsRuby::API::DestinationFinder.get(origin: origin, departuredate: departure_date, returndate: return_date) # add `token: token_string` if needed
+    data = SacsRuby::API::DestinationFinder.get(origin: origin, departuredate: departure_date, returndate: return_date)
 
     return self.new(data)
+  end
+
+  def self.top_destinations
+    data = SacsRuby::API::TopDestinations.get(origin: "SEA", topdestinations: 10)
+    return data
   end
 
   def self.airports(sabre)

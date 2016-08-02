@@ -10,11 +10,19 @@
 <span class="input-group-btn">
   <%= submit_tag "Search", class: 'btn btn-default'%>
 </span>
-
-
 <% end %>
-
-
-<% if @auth%>
-<%=@auth %>
+<br><br><br>
+<% if @top_destinations%>
+<h3>  Popular destrinations from <%= @top_destinations['OriginLocation']%></h3>
+  <%@top_destinations['Destinations'].each do |top| %>
+  <%= top['rank'] %>
+  <br>
+  <%= top['Destination']['DestinationLocation']%>
+  <br>
+  <%= top['Destination']['AirportName']%>
+  <br>
+  <%= top['Destination']['CityName']%>
+  <br>
+  <br>
+  <% end %>
 <% end %>
