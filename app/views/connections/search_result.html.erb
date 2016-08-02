@@ -1,52 +1,44 @@
-<% if @sabre_one || @sabre_two %>
 <h2> Your options from <%= @sabre_one.originlocation %> and <%= @sabre_two.originlocation %>are: </h2>
 <div class="row">
 
+<h2>
+  <div class="col-md-6">
+
+<%= @sabre_one.fareinfo.length %>
+</div>
 <div class="col-md-6">
 
-<%@sabre_one.fareinfo.each do |destination| %>
-<%= destination["DestinationLocation"] %>
-<br>
-Airline : <%= destination['LowestFare']["AirlineCodes"] %>
-<br>
-Price: <%= destination['LowestFare']["Fare"] %> <%= destination['CurrencyCode'] %>
-<br>
-Time:<%= destination["DepartureDateTime"] %>
-
-
-<br><br>
-<% end %>
+<%= @sabre_two.fareinfo.length %>
 </div>
 
-<div class="col-md-6">
-
-<%@sabre_two.fareinfo.each do |destination| %>
-<%= destination["DestinationLocation"] %>
-<br>
-Airline : <%= destination['LowestFare']["AirlineCodes"].first %>
-<br>
-Price: <%= destination['LowestFare']["Fare"] %> <%= destination['CurrencyCode'] %>
-<br>
-Time:<%= destination["DepartureDateTime"] %>
-
-
-<br><br>
-<% end %>
-</div>
+</h2>
 </div>
 
-<% end %>
-<br><br><br>
+<div class="row">
 
-<br><br><br><br><br><br>
+  <%@destinations.each do |dest| %>
+  <div class="col-md-6">
 
-<% if @kayak %>
-<%= @kayak.inspect %>
-<% end %>
+From <strong> <%= dest.originlocation %> </strong>
+<h2>
+<%= dest.fareinfo.length%>
+</h2>
+<% dest.fareinfo.each do |one|%>
+<br>
+To <strong> <%= one["DestinationLocation"] %> </strong>
+<br>
+Airline : <%= one['LowestFare']["AirlineCodes"] %>
+<br>
+Price: <%= one['LowestFare']["Fare"] %> <%= one['CurrencyCode'] %>
+<br>
+Getting in on: <%= one["DepartureDateTime"] %>
+<br>
+Coming back on: <%= one["ReturnDateTime"] %>
 <br><br><br>
-<br><br><br><br><br><br>
+<% end %>
 
-<% if @data %>
-<%= @data.inspect %>
+</div>
 <% end %>
-<br><br><br>
+
+
+</div>
