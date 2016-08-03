@@ -6,9 +6,32 @@ class Sabre
     @fareinfo = data["FareInfo"]
   end
 
+  def self.add_sum_prices(sabre1, sabre2)
+    hash = {}
+    sabre1.fareinfo.each do |destination|
+      hash[destination["DestinationLocation"]] = destination['LowestFare']["Fare"]
+    end
+
+    sabre2.fareinfo.each do |destination|
+      hash[destination["DestinationLocation"]] += destination['LowestFare']["Fare"]
+    end
+
+    sabre2.fareinfo.each do |destination|
+      destination['SumPrices'] = hash[destination["DestinationLocation"]]
+    end
+
+    sabre1.fareinfo.each do |destination|
+      destination['SumPrices'] = hash[destination["DestinationLocation"]]
+    end
+
+    sabre2.fareinfo = sabre1.fareinfo.sort_by { |destination| destination['SumPrices'] }
+    sabre1.fareinfo = sabre1.fareinfo.sort_by { |destination| destination['SumPrices'] }
+
+    return sabre1, sabre2
+  end
+
   def self.find(origin, departure_date, return_date)
     data = SacsRuby::API::DestinationFinder.get(origin: origin, departuredate: departure_date, returndate: return_date)
-
     return self.new(data)
   end
 
@@ -43,7 +66,13 @@ class Sabre
     one = self.clean(array, one)
     two = self.clean(array, two)
 
-    return one, two
+    return self.add_sum_prices(one, two)
+
+  end
+
+  def self.airline(airline_code)
+    data = SacsRuby::API::AirlineLookup.get(airlinecode: airline_code)
+    return data
   end
 
   def self.matching_destinations (origin_one, origin_two, departure_date, return_date)
@@ -52,5 +81,6 @@ class Sabre
 
     return self.find_commun(origin_one, origin_two)
   end
+
 
 end

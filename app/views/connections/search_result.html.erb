@@ -13,8 +13,14 @@
   <br>
   To <strong> <%= one["DestinationLocation"] %> </strong>
   <br>
-  Airline : <%= one['LowestFare']["AirlineCodes"] %>
+  Total: <strong> <%= one["SumPrices"] %> </strong>
   <br>
+  <% airline = Sabre.airline(one['LowestFare']["AirlineCodes"].first) %>
+  Airline : <%= airline["AirlineInfo"].first['AirlineName'] %>
+  <br>
+  Airline Code : <%= airline["AirlineInfo"].first['AirlineCode'] %>
+  <br>
+
   Price: <%= one['LowestFare']["Fare"] %> <%= one['CurrencyCode'] %>
   <br>
   Getting in on: <%= one["DepartureDateTime"] %>
