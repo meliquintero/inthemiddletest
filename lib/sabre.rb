@@ -6,6 +6,7 @@ class Sabre
     @fareinfo = data["FareInfo"]
   end
 
+
   def self.add_sum_prices(sabre1, sabre2)
     hash = {}
     sabre1.fareinfo.each do |destination|
@@ -40,11 +41,34 @@ class Sabre
     return data
   end
 
-  def self.airports(sabre)
+  def self.airport_codes(sabre)
     air = sabre.fareinfo.map do |one_dest|
      one_dest["DestinationLocation"]
     end
     return air
+  end
+
+  def self.geo_code (sabre)
+    sabre.fareinfo.each do |destination|
+      airline_info = SacsRuby::API::AirlineLookup.get(airlinecode: destination['LowestFare']['AirlineCodes'].first)
+      destination['AirlineName'] = airline_info['AirlineInfo'].first['BussinesName']
+
+      geo = SacsRuby::API::GeoCode.get(payload:
+      [{
+        'GeoCodeRQ' => {
+          'PlaceById' => {
+            'Id' => destination["DestinationLocation"],
+            'BrowseCategory' => {
+              'name' => "AIR"
+            }
+          }
+        }
+      }].to_json)
+      destination['AirportName'] = geo["Results"].first["GeoCodeRS"]['Place'].first['Name']
+      destination['City'] = geo["Results"].first["GeoCodeRS"]['Place'].first['City']
+      destination['State'] = geo["Results"].first["GeoCodeRS"]['Place'].first['State']
+      destination['Country'] = geo["Results"].first["GeoCodeRS"]['Place'].first['Country']
+    end
   end
 
   def self.clean(array, sabre)
@@ -58,21 +82,20 @@ class Sabre
   end
 
   def self.find_commun(one, two)
-    array_one = self.airports(one)
-    array_two = self.airports(two)
+    array_one = self.airport_codes(one)
+    array_two = self.airport_codes(two)
 
     array = array_one & array_two
 
     one = self.clean(array, one)
     two = self.clean(array, two)
 
+    self.geo_code(one)
+    self.geo_code(two)
+
+
     return self.add_sum_prices(one, two)
 
-  end
-
-  def self.airline(airline_code)
-    data = SacsRuby::API::AirlineLookup.get(airlinecode: airline_code)
-    return data
   end
 
   def self.matching_destinations (origin_one, origin_two, departure_date, return_date)
