@@ -41,7 +41,6 @@ class ConnectionsController < ApplicationController
 
   def search_result
 
-    @neaby = Stats.find
 
   RubyProf.start
     origin_one = params[:user_origin_one]
@@ -51,8 +50,9 @@ class ConnectionsController < ApplicationController
 
     # @kayak = Kayak.find(origin_one, departure_date)
     # @data = QpxExpress.find(origin_one, origin_two, departure_date, return_date)
-
     # @destinations = Sabre.matching_destinations(origin_one, origin_two, departure_date, return_date)
+
+    @neaby = FlightsStats.find
   result = RubyProf.stop
 
   printer = RubyProf::FlatPrinter.new(result)

@@ -31,6 +31,8 @@ gem "omniauth-google-oauth2"
 
 gem 'sacs_ruby'
 
+gem "skyscanner"
+
 gem 'oj'
 
 gem 'ruby-prof'
