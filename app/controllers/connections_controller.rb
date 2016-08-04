@@ -1,3 +1,4 @@
+require 'ruby-prof'
 require "#{Rails.root}/lib/qpx.rb"
 require "#{Rails.root}/lib/kayak.rb"
 require "#{Rails.root}/lib/sabre.rb"
@@ -38,6 +39,8 @@ class ConnectionsController < ApplicationController
 
 
   def search_result
+
+  RubyProf.start
     origin_one = params[:user_origin_one]
     origin_two = params[:user_origin_two]
     departure_date = params[:departure_date]
@@ -47,6 +50,10 @@ class ConnectionsController < ApplicationController
     # @data = QpxExpress.find(origin_one, origin_two, departure_date, return_date)
 
     @destinations = Sabre.matching_destinations(origin_one, origin_two, departure_date, return_date)
+  result = RubyProf.stop
+
+  printer = RubyProf::FlatPrinter.new(result)
+  printer.print(STDOUT)
 
   end
 

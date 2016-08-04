@@ -176,6 +176,7 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
+    ruby-prof (0.15.9)
     ruby-progressbar (1.8.1)
     sacs_ruby (0.1.1)
       multi_json (~> 1.0)
@@ -246,6 +247,7 @@ DEPENDENCIES
   pry-rails (= 0.3.4)
   rails (= 4.2.6)
   rails_12factor
+  ruby-prof
   sacs_ruby
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)

@@ -25,10 +25,11 @@ class Sabre
       destination['SumPrices'] = hash[destination["DestinationLocation"]]
     end
 
-    sabre2.fareinfo = sabre1.fareinfo.sort_by { |destination| destination['SumPrices'] }
+    sabre2.fareinfo = sabre2.fareinfo.sort_by { |destination| destination['SumPrices'] }
     sabre1.fareinfo = sabre1.fareinfo.sort_by { |destination| destination['SumPrices'] }
 
-    return sabre1, sabre2
+    final_array = [sabre1, sabre2]
+    return final_array
   end
 
   def self.find(origin, departure_date, return_date)
@@ -50,10 +51,7 @@ class Sabre
 
   def self.geo_code (sabre)
     sabre.fareinfo.each do |destination|
-      airline_info = SacsRuby::API::AirlineLookup.get(airlinecode: destination['LowestFare']['AirlineCodes'].first)
-      destination['AirlineName'] = airline_info['AirlineInfo'].first['BussinesName']
-
-      geo = SacsRuby::API::GeoCode.get(payload:
+      data = SacsRuby::API::GeoCode.get(payload:
       [{
         'GeoCodeRQ' => {
           'PlaceById' => {
@@ -64,10 +62,16 @@ class Sabre
           }
         }
       }].to_json)
-      destination['AirportName'] = geo["Results"].first["GeoCodeRS"]['Place'].first['Name']
-      destination['City'] = geo["Results"].first["GeoCodeRS"]['Place'].first['City']
-      destination['State'] = geo["Results"].first["GeoCodeRS"]['Place'].first['State']
-      destination['Country'] = geo["Results"].first["GeoCodeRS"]['Place'].first['Country']
+      destination['AirportName'] = data["Results"].first["GeoCodeRS"]['Place'].first['Name']
+      destination['City'] = data["Results"].first["GeoCodeRS"]['Place'].first['City']
+      destination['State'] = data["Results"].first["GeoCodeRS"]['Place'].first['State']
+      destination['Country'] = data["Results"].first["GeoCodeRS"]['Place'].first['Country']
+    end
+  end
+
+  def self.airline(sabre)
+    sabre.fareinfo.each do |destination|
+    destination['AirlineName'] = SacsRuby::API::AirlineLookup.get(airlinecode: destination['LowestFare']['AirlineCodes'].first)
     end
   end
 
@@ -90,11 +94,15 @@ class Sabre
     one = self.clean(array, one)
     two = self.clean(array, two)
 
+    self.airline(one)
+    self.airline(two)
+
     self.geo_code(one)
     self.geo_code(two)
 
+    final_array = self.add_sum_prices(one, two)
 
-    return self.add_sum_prices(one, two)
+    return final_array
 
   end
 
