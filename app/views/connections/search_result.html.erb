@@ -1,6 +1,30 @@
-<%=@neaby.inspect%>
+<%=@session.inspect%>
+<br><br>
+<% if @routes %>
 
-<br>
+<div class="row">
+  <div class="col-md-6">
+    <h2>Routes</h2>
+    <%=@routes.kind['Routes'].length%>
+    <%@routes.kind['Routes'].each do |dest|%>
+    <%= dest %>
+    <br><br>
+    <%end%>
+  </div>
+
+  <div class="col-md-6">
+    <h2>Quotes</h2>
+    <%=@quotes.kind['Quotes'].length%>
+    <% @quotes.kind['Quotes'].each do |dest| %>
+    <%=  dest %>
+    <br>
+    <br>
+
+    <% end%>
+  </div>
+</div>
+<% end %>
+
 <br>
 <br>
 <br>

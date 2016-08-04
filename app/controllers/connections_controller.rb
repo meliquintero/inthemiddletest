@@ -3,6 +3,7 @@ require "#{Rails.root}/lib/qpx.rb"
 require "#{Rails.root}/lib/kayak.rb"
 require "#{Rails.root}/lib/sabre.rb"
 require "#{Rails.root}/lib/flightstats.rb"
+require "#{Rails.root}/lib/skyscanner.rb"
 
 class ConnectionsController < ApplicationController
 
@@ -48,11 +49,18 @@ class ConnectionsController < ApplicationController
     departure_date = params[:departure_date]
     return_date = params[:return_date]
 
+    @origin_one = params[:user_origin_one]
+
     # @kayak = Kayak.find(origin_one, departure_date)
     # @data = QpxExpress.find(origin_one, origin_two, departure_date, return_date)
     # @destinations = Sabre.matching_destinations(origin_one, origin_two, departure_date, return_date)
 
-    @neaby = FlightsStats.find
+    # @neaby = FlightsStats.find
+    # @quotes = Skyscanner.findquotes(origin_one, departure_date, return_date)
+
+    # @routes = Skyscanner.findroutes(origin_one, departure_date, return_date)
+
+    @session = Skyscanner.findflights(origin_one, origin_two, departure_date, return_date)
   result = RubyProf.stop
 
   printer = RubyProf::FlatPrinter.new(result)
