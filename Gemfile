@@ -30,6 +30,7 @@ gem 'httparty', '0.13.7'
 gem "omniauth-google-oauth2"
 
 gem 'sacs_ruby'
+gem "flightstats-flex", "~> 0.3.0"
 
 gem 'oj'
 

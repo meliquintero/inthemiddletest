@@ -40,6 +40,7 @@ class ConnectionsController < ApplicationController
 
   def search_result
 
+    @neaby = FlightStats::NearService({ :params => { :lat => '47.6062', :lon => '122.3321', :miles => '10' } })
   RubyProf.start
     origin_one = params[:user_origin_one]
     origin_two = params[:user_origin_two]
@@ -54,6 +55,8 @@ class ConnectionsController < ApplicationController
 
   printer = RubyProf::FlatPrinter.new(result)
   printer.print(STDOUT)
+
+
 
   end
 
