@@ -4,6 +4,7 @@
 <br>
 <br>
 <br>
+<% if @destinations %>
 
 <br><h2> Your options from <%= @destinations[0].originlocation %> and <%= @destinations[1].originlocation %> are: </h2>
 
@@ -39,3 +40,5 @@
 
 
 </div>
+
+<% end %>

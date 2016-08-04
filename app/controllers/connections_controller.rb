@@ -2,6 +2,7 @@ require 'ruby-prof'
 require "#{Rails.root}/lib/qpx.rb"
 require "#{Rails.root}/lib/kayak.rb"
 require "#{Rails.root}/lib/sabre.rb"
+require "#{Rails.root}/lib/flightstats.rb"
 
 class ConnectionsController < ApplicationController
 
@@ -40,7 +41,8 @@ class ConnectionsController < ApplicationController
 
   def search_result
 
-    @neaby = FlightStats::NearService({ :params => { :lat => '47.6062', :lon => '122.3321', :miles => '10' } })
+    @neaby = Stats.find
+
   RubyProf.start
     origin_one = params[:user_origin_one]
     origin_two = params[:user_origin_two]
@@ -50,7 +52,7 @@ class ConnectionsController < ApplicationController
     # @kayak = Kayak.find(origin_one, departure_date)
     # @data = QpxExpress.find(origin_one, origin_two, departure_date, return_date)
 
-    @destinations = Sabre.matching_destinations(origin_one, origin_two, departure_date, return_date)
+    # @destinations = Sabre.matching_destinations(origin_one, origin_two, departure_date, return_date)
   result = RubyProf.stop
 
   printer = RubyProf::FlatPrinter.new(result)
