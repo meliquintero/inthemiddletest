@@ -2,7 +2,7 @@ require 'httparty'
 require 'json'
 
 class QpxExpress
-  BASE_URL = "https://www.googleapis.com/qpxExpress/v1/"
+  BASE_URL_QPX = "https://www.googleapis.com/qpxExpress/v1/"
   KEY = ENV["GOOGLE_KEY"]
   attr_accessor :data
   def initialize(data)
@@ -10,7 +10,7 @@ class QpxExpress
   end
 
   def self.find(origin, destination, departure_date, date)
-    data = HTTParty.post(BASE_URL + 'trips/search?key=' + KEY,
+    data = HTTParty.post(BASE_URL_QPX + 'trips/search?key=' + KEY,
     :headers => {
       'Content-Type' => 'application/json'
     },
