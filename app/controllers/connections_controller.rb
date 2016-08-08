@@ -42,8 +42,7 @@ class ConnectionsController < ApplicationController
 
   def search_result
 
-
-  RubyProf.start
+    # RubyProf.start
     origin_one = params[:user_origin_one]
     origin_two = params[:user_origin_two]
     departure_date = params[:departure_date]
@@ -54,18 +53,16 @@ class ConnectionsController < ApplicationController
     # @kayak = Kayak.find(origin_one, departure_date)
     # @data = QpxExpress.find(origin_one, origin_two, departure_date, return_date)
     # @destinations = Sabre.matching_destinations(origin_one, origin_two, departure_date, return_date)
+    # @neaby = FlightsStats.find ## works with lat anf lon
 
-    # @neaby = FlightsStats.find
     # @quotes = Skyscanner.findquotes(origin_one, departure_date, return_date)
-
     # @routes = Skyscanner.findroutes(origin_one, departure_date, return_date)
 
-    @session = Skyscanner.findflights(origin_one, origin_two, departure_date, return_date)
-  result = RubyProf.stop
+    @skyscanner = Skyscanner.findflights(origin_one, origin_two, departure_date, return_date)
 
-  printer = RubyProf::FlatPrinter.new(result)
-  printer.print(STDOUT)
-
+    # result = RubyProf.stop
+    # printer = RubyProf::FlatPrinter.new(result)
+    # printer.print(STDOUT)
 
 
   end
