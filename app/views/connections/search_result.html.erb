@@ -1,13 +1,14 @@
 <%=@skyscanner.inspect%>
 <br><br>
 
-<% if @routes %>
+<% if @quotes_one %>
 
 <div class="row">
   <div class="col-md-6">
-    <h2>Routes</h2>
-    <%=@routes.kind['Routes'].length%>
-    <%@routes.kind['Routes'].each do |dest|%>
+    <h2>Quotes</h2>
+    <h3><%=@quotes_one.kind['Quotes'].length%></h3>
+
+    <%@quotes_one.kind['Quotes'].each do |dest|%>
     <%= dest %>
     <br><br>
     <%end%>
@@ -15,8 +16,8 @@
 
   <div class="col-md-6">
     <h2>Quotes</h2>
-    <%=@quotes.kind['Quotes'].length%>
-    <% @quotes.kind['Quotes'].each do |dest| %>
+    <h3><%=@quotes_two.kind['Quotes'].length%></h3>
+    <% @quotes_two.kind['Quotes'].each do |dest| %>
     <%=  dest %>
     <br>
     <br>
