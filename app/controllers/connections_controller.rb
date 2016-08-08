@@ -55,10 +55,12 @@ class ConnectionsController < ApplicationController
     # @destinations = Sabre.matching_destinations(origin_one, origin_two, departure_date, return_date)
     # @neaby = FlightsStats.find ## works with lat anf lon
 
-    # @quotes = Skyscanner.findquotes(origin_one, departure_date, return_date)
+    @quotes_one = Skyscanner.findquotes(origin_one, departure_date, return_date)
+    @quotes_two = Skyscanner.findroutes(origin_two, departure_date, return_date)
+
     # @routes = Skyscanner.findroutes(origin_one, departure_date, return_date)
 
-    @skyscanner = Skyscanner.findflights(origin_one, origin_two, departure_date, return_date)
+    # @skyscanner = Skyscanner.findflights(origin_one, origin_two, departure_date, return_date)
 
     # result = RubyProf.stop
     # printer = RubyProf::FlatPrinter.new(result)

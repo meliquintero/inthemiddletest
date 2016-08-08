@@ -58,8 +58,9 @@ class Skyscanner
      return session.headers['location']
    end
 
-  def self.findflights(origin, desti, departure_date, return_time)
-    url = self.get_session_key(origin, desti, departure_date, return_time)
+  def self.findflights(origin_one, destination, departure_date, return_time)
+
+    url = self.get_session_key(origin_one, destination, departure_date, return_time)
     data = HTTParty.get(url + "?apiKey=" + ENV["SKYSCANNER_KEY"]).parsed_response
 
 
