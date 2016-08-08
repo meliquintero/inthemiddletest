@@ -44,8 +44,8 @@ class Skyscanner
       "locale" => LOCALE,
       "country" => "US",
       "currency" => CURRENCY,
-      "originplace" => origin + "-iata",
-      "destinationplace" => desti + "-iata",
+      "originplace" => "96322-sky48",
+      "destinationplace" => "81665-sky48",
       "Outbounddate" => departure_date,
       "Inbounddate" => return_time,
       "adults" => 1
