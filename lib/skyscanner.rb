@@ -32,13 +32,32 @@ class Skyscanner
   end
 
   def self.clean(array, skyscanner_object)
-    skyscanner_object.quotes.each_with_index do |one_dest, index|
-      unless array.include? one_dest["OutboundLeg"]["DestinationId"]
-       skyscanner_object.quotes[index] = nil
+     final = []
+    skyscanner_object.quotes.each do |one_dest|
+      if array.include? one_dest["OutboundLeg"]["DestinationId"]
+        final.push one_dest
       end
     end
-    skyscanner_object.quotes = skyscanner_object.quotes.compact
+    skyscanner_object.quotes = final
+    
     return skyscanner_object
+  end
+
+  def self.clean_again(skyscanner_quotes)
+
+    skyscanner_quotes.each do |qoute|
+      repeated = skyscanner_quotes.find_all { |twin| twin["OutboundLeg"]["DestinationId"] == qoute["OutboundLeg"]["DestinationId"] }
+      if repeated.length > 1
+        if repeated[0]['MinPrice'] > repeated[1]['MinPrice']
+          skyscanner_quotes.delete(repeated[0])
+        else
+          skyscanner_quotes.delete(repeated[1])
+        end
+      end
+    end
+
+    return skyscanner_quotes
+
   end
 
   def self.add_sum_prices(skyscanner1, skyscanner2)
@@ -74,6 +93,11 @@ class Skyscanner
     one = self.clean(array, one)
     two = self.clean(array, two)
 
+    if one.quotes.length != two.quotes.length
+      one.quotes = self.clean_again(one.quotes)
+      two.quotes = self.clean_again(two.quotes)
+    end
+
     final_array = self.add_sum_prices(one, two)
 
     return final_array
@@ -107,7 +131,6 @@ class Skyscanner
       "adults" => 1
     },
     headers: {
-      #TRIED DELETETING FOLLOWING LINE
      'Content-Type' => 'application/x-www-form-urlencoded',
      'Accept' => 'application/json'
      })
@@ -122,8 +145,6 @@ class Skyscanner
 
     return self.new(data)
   end
-
-
 
 
 end
