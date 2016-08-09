@@ -1,33 +1,27 @@
-<%=@skyscanner.inspect%>
-<br><br>
-
-<% if @quotes_one %>
-
 <div class="row">
   <div class="col-md-6">
-    <h2>Quotes</h2>
-    <h3><%=@quotes_one.kind['Quotes'].length%></h3>
-
-    <%@quotes_one.kind['Quotes'].each do |dest|%>
-    <%= dest %>
-    <br><br>
-    <%end%>
+    <%@skyscanner[0].quotes.each do |dest|%>
+    <%=dest["MinPrice"]%>,
+    <%=dest["Direct"]%>
+    <br>
+    <%=dest["OutboundLeg"]%>
+    <br>
+    <%=dest["InboundLeg"]%>
+    <br><br><br>
+    <% end %>
   </div>
-
   <div class="col-md-6">
-    <h2>Quotes</h2>
-    <h3><%=@quotes_two.kind['Quotes'].length%></h3>
-    <% @quotes_two.kind['Quotes'].each do |dest| %>
-    <%=  dest %>
+    <%@skyscanner[1].quotes.each do |dest|%>
+    <%=dest["MinPrice"]%>,
+    <%=dest["Direct"]%>
     <br>
+    <%=dest["OutboundLeg"]%>
     <br>
-
-    <% end%>
+    <%=dest["InboundLeg"]%>
+    <br><br><br>
+    <% end %>
   </div>
 </div>
-<% end %>
-
-<br>
 <br>
 <br>
 <% if @destinations %>
