@@ -39,7 +39,7 @@ class Skyscanner
       end
     end
     skyscanner_object.quotes = final
-    
+
     return skyscanner_object
   end
 
@@ -111,7 +111,7 @@ class Skyscanner
   end
 
   def self.findlocation(location_id)
-    data = HTTParty.get( BASE_URL_SKY_LOC + MARKET + '/' + CURRENCY + '/' + LOCALE + '/?id=' + location_id.to_s + '&apiKey=' + ENV["SKYSCANNER_KEY"],
+    data = HTTParty.get( BASE_URL_SKY_LOC + MARKET + '/' + CURRENCY + '/' + LOCALE + '/?id=' + location_id.to_s + '-sky&apiKey=' + ENV["SKYSCANNER_KEY"],
     headers: { 'Content-Type' => 'application/json' })
       .parsed_response
       return data
@@ -146,5 +146,9 @@ class Skyscanner
     return self.new(data)
   end
 
+  def self.destination_name(id)
+   data =  HTTParty.get("http://partners.api.skyscanner.net/apiservices/autosuggest/v1.0/" + MARKET + '/' + CURRENCY + '/' + LOCALE + '/?id=' + id.to_s + '-sky48&apiKey=' + ENV["SKYSCANNER_KEY"])
+   return data
+  end
 
 end

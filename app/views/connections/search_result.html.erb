@@ -1,5 +1,11 @@
+<% if @destinations %>
+<br><h2> Your options from <%= @destinations[0].originlocation %> and <%= @destinations[1].originlocation %> are: </h2>
+<% end %>
+
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-3">
+    <%= @skyscanner[0].quotes.length%>
+    <br>
     <%@skyscanner[0].quotes.each do |dest|%>
     Total for both around trip flight <strong> <%=dest['SumPrices']%></strong>
     <br>
@@ -12,11 +18,19 @@
     <br>
     <%=dest["OutboundLeg"]%>
     <br>
+    <br>
+    Origin: <%= Skyscanner.destination_name(dest["OutboundLeg"]['OriginId']) %>
+    <br><br>
     <%=dest["InboundLeg"]%>
-    <br><br><br>
+    <br><br>
+    destination: <%= Skyscanner.destination_name(dest["OutboundLeg"]['DestinationId']) %>
+    <br> <br><br>
+
     <% end %>
   </div>
-  <div class="col-md-6">
+  <div class="col-md-3">
+    <%= @skyscanner[1].quotes.length%>
+    <br>
     <%@skyscanner[1].quotes.each do |dest|%>
     Total for both around trip flight <strong> <%=dest['SumPrices']%></strong>
     <br>
@@ -32,17 +46,10 @@
     <br><br><br>
     <% end %>
   </div>
-</div>
-<br>
-<br>
-<% if @destinations %>
-
-<br><h2> Your options from <%= @destinations[0].originlocation %> and <%= @destinations[1].originlocation %> are: </h2>
-
-<div class="row">
+  <% if @destinations %>
 
   <%@destinations.each do |dest| %>
-  <div class="col-md-6">
+  <div class="col-md-3">
 
   From <strong> <%= dest.originlocation %> </strong>
   <h2>
@@ -65,11 +72,9 @@
   Coming back on: <%= one["ReturnDateTime"] %>
   <br><br><br>
   <% end %>
-
   </div>
+
+  <% end %>
   <% end %>
 
-
 </div>
-
-<% end %>
